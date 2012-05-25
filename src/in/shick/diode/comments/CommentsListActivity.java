@@ -52,6 +52,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
+import android.text.ClipboardManager;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -1375,6 +1376,8 @@ public class CommentsListActivity extends ListActivity
     			menu.add(0, Constants.HIDE_CONTEXT_ITEM, Menu.NONE, "Hide");
     		}
     		
+    		menu.add(0, Constants.COPY_URL_TO_CLIPBOARD_CONTEXT_ITEM, Menu.NONE, R.string.copy_url_to_clipboard);
+    		
     		menu.add(0, Constants.DIALOG_VIEW_PROFILE, Menu.NONE,
     				String.format(getResources().getString(R.string.user_profile), item.getAuthor()));
     		
@@ -1417,6 +1420,13 @@ public class CommentsListActivity extends ListActivity
     		
     	case Constants.UNHIDE_CONTEXT_ITEM:
     		new HideTask(false, getOpThingInfo(), mSettings, this).execute();
+    		return true;
+    		
+    	case Constants.COPY_URL_TO_CLIPBOARD_CONTEXT_ITEM:
+    		ClipboardManager clipboard = 
+			      (ClipboardManager) getSystemService(CLIPBOARD_SERVICE); 
+			
+			clipboard.setText(getOpThingInfo().getUrl());
     		return true;
     		
     	case Constants.SHARE_CONTEXT_ITEM:
