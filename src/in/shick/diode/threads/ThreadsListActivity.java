@@ -44,7 +44,7 @@ import in.shick.diode.submit.SubmitLinkActivity;
 import in.shick.diode.things.ThingInfo;
 import in.shick.diode.threads.ShowThumbnailsTask.ThumbnailLoadAction;
 import in.shick.diode.user.ProfileActivity;
-import in.shick.diode.filters.FilterListActivity;
+
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +64,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.ClipboardManager;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -1009,6 +1010,7 @@ public final class ThreadsListActivity extends ListActivity {
     	menu.add(0, Constants.VIEW_SUBREDDIT_CONTEXT_ITEM, 0, R.string.view_subreddit);
     	menu.add(0, Constants.SHARE_CONTEXT_ITEM, 0, R.string.share);
     	menu.add(0, Constants.OPEN_IN_BROWSER_CONTEXT_ITEM, 0, R.string.open_browser);
+    	menu.add(0, Constants.COPY_URL_TO_CLIPBOARD_CONTEXT_ITEM, 0, R.string.copy_url_to_clipboard);
     	
     	if(mSettings.isLoggedIn()){
     		if(!_item.isSaved()){
@@ -1050,6 +1052,13 @@ public final class ThreadsListActivity extends ListActivity {
 		case Constants.OPEN_IN_BROWSER_CONTEXT_ITEM:
 			setLinkClicked(_item);
 			Common.launchBrowser(this, _item.getUrl(), Util.createThreadUri(_item).toString(), false, true, true, mSettings.isSaveHistory());
+			return true;
+			
+		case Constants.COPY_URL_TO_CLIPBOARD_CONTEXT_ITEM:
+			ClipboardManager clipboard = 
+			      (ClipboardManager) getSystemService(CLIPBOARD_SERVICE); 
+			
+			clipboard.setText(_item.getUrl());
 			return true;
 			
 		case Constants.SAVE_CONTEXT_ITEM:

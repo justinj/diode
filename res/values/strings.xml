@@ -155,6 +155,7 @@
 	<string name="user_profile">%s\'s profile</string>
 	<string name="view_comments">View comments</string>
 	<string name="view_subreddit">View subreddit</string>
+	<string name="copy_url_to_clipboard">Copy URL to clipboard</string>
 	<string name="close_browser">Close browser</string>
 	
 	
